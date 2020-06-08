@@ -1,0 +1,14 @@
+curl 'https://openapi.91cpct.com/api/device/runData' \
+  -H 'Connection: keep-alive' \
+  -H 'Pragma: no-cache' \
+  -H 'Cache-Control: no-cache' \
+  -H 'accept: */*' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36' \
+  -H 'Content-Type: application/json' \
+  -H 'Origin: http://192.168.0.100:8030' \
+  -H 'Referer: http://192.168.0.100:8030/swagger-ui.html' \
+  -H 'Accept-Language: zh-CN,zh;q=0.9,zh-TW;q=0.8,en-US;q=0.7,en;q=0.6' \
+  -H 'Cookie: SL_G_WPT_TO=zh-CN; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1' \
+  --data-binary '{"devNum":"2sp0bfU7AYmZ200p","reqParams":"ukgFjb0GrGxhDhLfTV3Aj1zhPagEDBycG5ikK115Vvb+iH4O26iajJq60EtF8fbKzg3B8CTv2Qd2lRO8s+rIcdudb6XoRUgxNfFiq6yJvqQ0KyTNmIcs57bdodetbrpy6aW5EOCGXTI9n4IQPqKyk+9EgdCkFbPs7w9QxFzS4TYRWGYvY/yNJp7RsaiwFsc8f6u7NiMO7f0X/FLpMjLSDRyTXjQmtZWfswpYSWIea7jzifbA2Ya7QyU53ic7nNIEkmerKtcaN7l+B7hEd3EvZE7uWsrKs6U3UEq4AnOuwmNLwjx9PpEcUodtEgS0+OfLzQ81KDmBbQ+8Uvgb+J7a4N21VgobsGfPX4MM5bFCr/9umMzYkMmwRU0Mwp0OQL479u7Utk3Vf+gkYVuPYDcr7c48Rv+eVqNPRfjHiquTRGUl8iTl8R1zqSXYhW336Oag1w2lDAu/DYfcU+idlABm2xZmyKwByl/VqWwrYNjAzXE3jtTxG6I1A7Y8uirF2hwxrDATUAkW1Y0zBA2sNlMY+uGMyWG9LBckGKHroaf10dZxQNJJSjPHc7OAAjO4ALTI+hVIw+XzJq/f/esK7yHzLItWFObCsPEwrdcUyy6rmE2/R6pXk2V8+/Ao1VMY+Z/rkwFunkX09VGnWmg32eBIZlP1n4pJLThEEjRivqUhD59d58HG42aIiXdIX4jKOZPs8793rBhwRE2/yqF6fRX3dsSbtW6BFjdd9oDcBWm1rHg4XQ3w0enA5+vGvd2QcZsfx+4PZ3H/DjzxaaIgY0lOQRcaQWfvCU6Z3LqzqjmMB3//7srG2rTmFacOpY7mEPX/h7xAgE1Y4gR+G3ph6RTjyfB4/5bTiOhytRrOEHpMq9ztOx3f6TQmhZnIU/vpiGfNAU5s/EjmizUj7M40FTX/s4dmdkJt2LsG3pBgjNfqVtnWnDOudBgXke1S3v9Yywuyq7Z9HKA3qhMmUPWwRdmzVVdo4gPPeh809UOGwq7u5Ac84UpDgJqT0xUGTigp/mumn6v/rW/G3ZbFwYFfo42u5g=="}' \
+  --compressed \
+  --insecure
