@@ -10,8 +10,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"go-stress-testing/model"
-	"go-stress-testing/server"
+	"go-stress-testing-pool/model"
+	"go-stress-testing-pool/server"
 	"runtime"
 	"strings"
 )
@@ -86,7 +86,7 @@ func main() {
 
 	var (
 		concurrency uint64 // 并发数
-		totalNumber uint64 // 请求总数(单个并发)
+		cycleNumber uint64 // 请求总数(单个并发)
 		debugStr    string // 是否是debug
 		requestUrl  string // 压测的url 目前支持，http/https ws/wss
 		path        string // curl文件路径 http接口压测，自定义参数设置
@@ -96,7 +96,7 @@ func main() {
 	)
 
 	flag.Uint64Var(&concurrency, "c", 1, "并发数")
-	flag.Uint64Var(&totalNumber, "n", 1, "请求总数")
+	flag.Uint64Var(&cycleNumber, "n", 1, "请求总数")
 	flag.StringVar(&debugStr, "d", "false", "调试模式")
 	flag.StringVar(&requestUrl, "u", "", "压测地址")
 	flag.StringVar(&path, "p", "", "curl文件路径")
@@ -112,8 +112,8 @@ func main() {
 	//go run main.go -c 3000 -n 1 -p curl/test.chrome.curl.txt -v json
 	//go run main.go -c 3000 -n 1 -p curl/aws.heartBeat.chrome.curl.txt -v json
 
-	concurrency = 200
-	totalNumber = 1
+	concurrency = 1000
+	cycleNumber = 1
 	//path =  "curl/local.heartBeat.chrome.curl.txt"
 	//path =  "curl/local.heartBeat.chrome.curl.txt"
 	path =  "curl/aws.heartBeat.chrome.curl.txt"
@@ -121,10 +121,10 @@ func main() {
 	//debugStr = "true"
 
 
-	if concurrency == 0 || totalNumber == 0 || (requestUrl == "" && path == "") {
+	if concurrency == 0 || cycleNumber == 0 || (requestUrl == "" && path == "") {
 		fmt.Printf("示例: go run main.go -c 1 -n 1 -u https://www.baidu.com/ \n")
 		fmt.Printf("压测地址或curl路径必填 \n")
-		fmt.Printf("当前请求参数: -c %d -n %d -d %v -u %s \n", concurrency, totalNumber, debugStr, requestUrl)
+		fmt.Printf("当前请求参数: -c %d -n %d -d %v -u %s \n", concurrency, cycleNumber, debugStr, requestUrl)
 
 		flag.Usage()
 
@@ -139,12 +139,12 @@ func main() {
 		return
 	}
 
-	fmt.Printf("\n 开始启动  并发数:%d 请求数:%d 请求参数: \n", concurrency, totalNumber)
+	fmt.Printf("\n 开始启动  并发数:%d  循环次数:%d \n", concurrency, cycleNumber)
 	request.Print()
 
 	// 开始处理
-	//server.Dispose(concurrency, totalNumber, request)
-	server.DisposePool(concurrency, totalNumber, request)
+	//server.Dispose(concurrency, cycleNumber, request)
+	server.DisposePool(concurrency, cycleNumber, request)
 
 	return
 }

@@ -7,7 +7,7 @@ import (
 
 const (
 	workerNumMax     = 10000
-	workerNumDefault = 200
+	workerNumDefault = 1000
 	//workerNumDefault = 20
 )
 

@@ -1,15 +1,15 @@
 package job
 
 import (
-	"go-stress-testing/model"
-	"go-stress-testing/server/golink"
+	"go-stress-testing-pool/model"
+	"go-stress-testing-pool/server/golink"
 	"sync"
 )
 
 func RunHttp(param []interface{}) {
-	var i uint64
+	var chanId uint64
 	var ch chan *model.RequestResults
-	var totalNumber uint64
+	var cycleNumber uint64
 	var wg *sync.WaitGroup
 	var request *model.Request
 
@@ -25,13 +25,13 @@ func RunHttp(param []interface{}) {
 		}
 	}
 
-	i = paramMap["i"].(uint64)
+	chanId = paramMap["chanId"].(uint64)
 	ch = paramMap["ch"].(chan *model.RequestResults)
-	totalNumber = paramMap["totalNumber"].(uint64)
+	cycleNumber = paramMap["cycleNumber"].(uint64)
 	wg = paramMap["wg"].(*sync.WaitGroup)
 	request = paramMap["request"].(*model.Request)
 
-	cTest(i, ch, totalNumber, wg, request)
+	cTest(chanId, ch, cycleNumber, wg, request)
 
 	if resultChan != nil {
 		//resultChan <- c
@@ -41,7 +41,7 @@ func RunHttp(param []interface{}) {
 
 	//time.Sleep(time.Millisecond*10);
 }
-func cTest( i uint64, ch chan *model.RequestResults, totalNumber uint64, wg *sync.WaitGroup, request *model.Request)  {
-	golink.Http(i, ch, totalNumber, wg, request)
+func cTest( chanId uint64, ch chan *model.RequestResults, cycleNumber uint64, wg *sync.WaitGroup, request *model.Request)  {
+	golink.Http(chanId, ch, cycleNumber, wg, request)
 	return
 }

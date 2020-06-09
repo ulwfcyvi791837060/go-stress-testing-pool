@@ -9,13 +9,13 @@ package server
 
 import (
 	"fmt"
-	"go-stress-testing/job"
-	"go-stress-testing/model"
-	"go-stress-testing/server/client"
-	"go-stress-testing/server/golink"
-	"go-stress-testing/server/statistics"
-	"go-stress-testing/server/verify"
-	"go-stress-testing/worker"
+	"go-stress-testing-pool/job"
+	"go-stress-testing-pool/model"
+	"go-stress-testing-pool/server/client"
+	"go-stress-testing-pool/server/golink"
+	"go-stress-testing-pool/server/statistics"
+	"go-stress-testing-pool/server/verify"
+	"go-stress-testing-pool/worker"
 	"sync"
 	"time"
 )
@@ -41,7 +41,7 @@ func init() {
 	model.RegisterVerifyWebSocket("json", verify.WebSocketJson)
 }
 
-func DisposePool(concurrency, totalNumber uint64, request *model.Request) {
+func DisposePool(concurrency, cycleNumber uint64, request *model.Request) {
 
 	// 设置接收数据缓存
 	requestResultCh := make(chan *model.RequestResults, 1000000)
@@ -59,9 +59,9 @@ func DisposePool(concurrency, totalNumber uint64, request *model.Request) {
 		switch request.Form {
 		case model.FormTypeHttp:
 			var paramMap = make(map[string]interface{})
-			paramMap["i"] = i
+			paramMap["chanId"] = i
 			paramMap["ch"] = requestResultCh
-			paramMap["totalNumber"] = totalNumber
+			paramMap["cycleNumber"] = cycleNumber
 			paramMap["wg"] = &wg
 			paramMap["request"] = request
 
@@ -79,7 +79,7 @@ func DisposePool(concurrency, totalNumber uint64, request *model.Request) {
 					continue
 				}
 
-				go golink.WebSocket(i, requestResultCh, totalNumber, &wg, request, ws)
+				go golink.WebSocket(i, requestResultCh, cycleNumber, &wg, request, ws)
 			case 2:
 				// 并发建立长链接
 				go func(i uint64) {
@@ -92,7 +92,7 @@ func DisposePool(concurrency, totalNumber uint64, request *model.Request) {
 						return
 					}
 
-					golink.WebSocket(i, requestResultCh, totalNumber, &wg, request, ws)
+					golink.WebSocket(i, requestResultCh, cycleNumber, &wg, request, ws)
 				}(i)
 
 				// 注意:时间间隔太短会出现连接失败的报错 默认连接时长:20毫秒(公网连接)
@@ -122,7 +122,7 @@ func DisposePool(concurrency, totalNumber uint64, request *model.Request) {
 	return
 }
 
-func Dispose(concurrency, totalNumber uint64, request *model.Request) {
+func Dispose(concurrency, cycleNumber uint64, request *model.Request) {
 
 	// 设置接收数据缓存
 	requestResultCh := make(chan *model.RequestResults, 1000000)
@@ -139,7 +139,7 @@ func Dispose(concurrency, totalNumber uint64, request *model.Request) {
 		wg.Add(1)
 		switch request.Form {
 		case model.FormTypeHttp:
-			go golink.Http(i, requestResultCh, totalNumber, &wg, request)
+			go golink.Http(i, requestResultCh, cycleNumber, &wg, request)
 		case model.FormTypeWebSocket:
 
 			switch connectionMode {
@@ -153,7 +153,7 @@ func Dispose(concurrency, totalNumber uint64, request *model.Request) {
 					continue
 				}
 
-				go golink.WebSocket(i, requestResultCh, totalNumber, &wg, request, ws)
+				go golink.WebSocket(i, requestResultCh, cycleNumber, &wg, request, ws)
 			case 2:
 				// 并发建立长链接
 				go func(i uint64) {
@@ -166,7 +166,7 @@ func Dispose(concurrency, totalNumber uint64, request *model.Request) {
 						return
 					}
 
-					golink.WebSocket(i, requestResultCh, totalNumber, &wg, request, ws)
+					golink.WebSocket(i, requestResultCh, cycleNumber, &wg, request, ws)
 				}(i)
 
 				// 注意:时间间隔太短会出现连接失败的报错 默认连接时长:20毫秒(公网连接)

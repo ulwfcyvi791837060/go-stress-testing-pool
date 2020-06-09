@@ -10,7 +10,7 @@ package verify
 import (
 	"encoding/json"
 	"fmt"
-	"go-stress-testing/model"
+	"go-stress-testing-pool/model"
 )
 
 /***************************  返回值为json  ********************************/

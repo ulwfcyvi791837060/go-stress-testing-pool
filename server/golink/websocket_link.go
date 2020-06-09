@@ -9,9 +9,9 @@ package golink
 
 import (
 	"fmt"
-	"go-stress-testing/heper"
-	"go-stress-testing/model"
-	"go-stress-testing/server/client"
+	"go-stress-testing-pool/heper"
+	"go-stress-testing-pool/model"
+	"go-stress-testing-pool/server/client"
 	"sync"
 	"time"
 )
@@ -31,7 +31,7 @@ func init() {
 }
 
 // web socket go link
-func WebSocket(chanId uint64, ch chan<- *model.RequestResults, totalNumber uint64, wg *sync.WaitGroup, request *model.Request, ws *client.WebSocket) {
+func WebSocket(chanId uint64, ch chan<- *model.RequestResults, cycleNumber uint64, wg *sync.WaitGroup, request *model.Request, ws *client.WebSocket) {
 
 	defer func() {
 		wg.Done()
@@ -59,7 +59,7 @@ func WebSocket(chanId uint64, ch chan<- *model.RequestResults, totalNumber uint6
 
 			// 结束条件
 			i = i + 1
-			if i >= totalNumber {
+			if i >= cycleNumber {
 				goto end
 			}
 		}

@@ -9,8 +9,7 @@ package statistics
 
 import (
 	"fmt"
-	"go-stress-testing/model"
-	"strconv"
+	"go-stress-testing-pool/model"
 	"strings"
 	"sync"
 	"time"
@@ -42,7 +41,7 @@ func ReceivingResults(concurrent uint64, requestResultCh <-chan *model.RequestRe
 		minTime        uint64 // 最小时长
 		successNum     uint64 // 成功处理数，code为0
 		failureNum     uint64 // 处理失败数，code不为0
-		chanIdLen      int    // 并发数
+		chanIdLen      int    // 并发数 以id去重
 		chanIds        = make(map[uint64]bool)
 	)
 
@@ -144,15 +143,15 @@ func calculateData(concurrentToal, processingTime, requestTime, maxTime, minTime
 	// 平均 每个协程成功数*总协程数据/总耗时 (每秒)
 	//fmt.Printf("concurrent %7d",concurrent)
 	//fmt.Printf("processingTime %7d ",processingTime)
-	//fmt.Printf("请求数 %7d ",successNum+failureNum)
-	//fmt.Printf("processingTime %7d ",processingTime/1e9)
+	//fmt.Printf("请求数 %8.2f ",float64(successNum*1e9*successNum))
+	//fmt.Printf("processingTime %8.2f ",float64(processingTime))
 
-	chanIdLenStr := strconv.Itoa(chanIdLen)
-	intNum, _ := strconv.Atoi(chanIdLenStr)
-	int64Num := uint64(intNum)
+	/*chanIdLenStr := strconv.Itoa(chanIdLen)
+	chanIdLenIntNum, _ := strconv.Atoi(chanIdLenStr)
+	chanIdLenInt64 := uint64(chanIdLenIntNum)*/
 	if processingTime != 0 {
 		//qps = float64(successNum*1e9*concurrent) / float64(processingTime)
-		qps = float64((successNum+failureNum)*int64Num) / float64(processingTime/1e9)
+		qps = float64(successNum*1e9*successNum)/ float64(processingTime)
 		//qps = float64(successNum+failureNum) / float64(processingTime/1e9)
 	}
 
@@ -162,7 +161,7 @@ func calculateData(concurrentToal, processingTime, requestTime, maxTime, minTime
 		averageTime = float64(processingTime) / float64(successNum*1e6*concurrent)
 	}*/
 	if successNum != 0 && (successNum+failureNum) != 0 {
-		averageTime = float64(processingTime/1e6) / float64((successNum+failureNum)*int64Num)
+		averageTime = float64(processingTime) / float64(successNum*1e6)
 	}
 
 	// 纳秒=>毫秒
@@ -170,8 +169,8 @@ func calculateData(concurrentToal, processingTime, requestTime, maxTime, minTime
 	minTimeFloat = float64(minTime) / 1e6
 	requestTimeFloat = float64(requestTime) / 1e9
 	processingTimeFloat := 0.0
-	if int64Num != 0  {
-		processingTimeFloat = float64(processingTime/ int64Num) / 1e9
+	if successNum+failureNum != 0  {
+		processingTimeFloat = float64(processingTime) / float64(successNum*1e9)
 	}
 
 	// 打印的时长都为毫秒

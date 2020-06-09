@@ -15,7 +15,7 @@ govendor init
 
 ## 目录
 - [1、项目说明](#1项目说明)
-    - [1.1 go-stress-testing](#11-go-stress-testing)
+    - [1.1 go-stress-testing-pool](#11-go-stress-testing-pool)
     - [1.2 项目体验](#12-项目体验)
 - [2、压测](#2压测)
     - [2.1 压测是什么](#21-压测是什么)
@@ -34,11 +34,11 @@ govendor init
         - [3.4.1 云压测介绍](#341-云压测介绍)
         - [3.4.2 阿里云 性能测试 PTS](#342-阿里云-性能测试-PTS)
         - [3.4.3 腾讯云 压测大师 LM](#343-腾讯云-压测大师-LM)
-- [4、go-stress-testing go语言实现的压测工具](#4go-stress-testing-go语言实现的压测工具)
+- [4、go-stress-testing-pool go语言实现的压测工具](#4go-stress-testing-pool-go语言实现的压测工具)
     - [4.1 介绍](#41-介绍)
     - [4.2 用法](#42-用法)
     - [4.3 实现](#43-实现)
-    - [4.4 go-stress-testing 对 Golang web 压测](#44-go-stress-testing-对-golang-web-压测)
+    - [4.4 go-stress-testing-pool 对 Golang web 压测](#44-go-stress-testing-pool-对-golang-web-压测)
 - [5、压测工具的比较](#5压测工具的比较)
     - [5.1 比较](#51-比较)
     - [5.2 如何选择压测工具](#52-如何选择压测工具)
@@ -54,7 +54,7 @@ govendor init
 
 
 ## 1、项目说明
-### 1.1 go-stress-testing
+### 1.1 go-stress-testing-pool
 
 go 实现的压测工具，每个用户用一个协程的方式模拟，最大限度的利用CPU资源
 
@@ -62,7 +62,7 @@ go 实现的压测工具，每个用户用一个协程的方式模拟，最大�
 
 - 可以在 mac/linux/windows 不同平台下执行的命令
 
-- [go-stress-testing](https://github.com/link1st/go-stress-testing/releases) 压测工具下载地址
+- [go-stress-testing-pool](https://github.com/link1st/go-stress-testing-pool/releases) 压测工具下载地址
 
 参数说明:
 
@@ -75,7 +75,7 @@ go 实现的压测工具，每个用户用一个协程的方式模拟，最大�
 ```shell
 
 # 运行 以mac为示例
-./go-stress-testing-mac -c 1 -n 100 -u https://www.baidu.com/
+./go-stress-testing-pool-mac -c 1 -n 100 -u https://www.baidu.com/
 
 ```
 
@@ -433,21 +433,21 @@ PTS（Performance Testing Service）是面向所有技术背景人员的云化�
 通过创建虚拟机器人模拟多用户的并发场景，提供一整套完整的服务器压测解决方案
 
 
-## 4、go-stress-testing go语言实现的压测工具
+## 4、go-stress-testing-pool go语言实现的压测工具
 
 ### 4.1 介绍
 
-- go-stress-testing 是go语言实现的简单压测工具，源码开源、支持二次开发，可以压测http、webSocket请求，使用协程模拟单个用户，可以更高效的利用CPU资源。
+- go-stress-testing-pool 是go语言实现的简单压测工具，源码开源、支持二次开发，可以压测http、webSocket请求，使用协程模拟单个用户，可以更高效的利用CPU资源。
 
-- 项目地址 [https://github.com/link1st/go-stress-testing](https://github.com/link1st/go-stress-testing)
+- 项目地址 [https://github.com/link1st/go-stress-testing-pool](https://github.com/link1st/go-stress-testing-pool)
 
 ### 4.2 用法
 
-- [go-stress-testing](https://github.com/link1st/go-stress-testing/releases) 下载地址
+- [go-stress-testing-pool](https://github.com/link1st/go-stress-testing-pool/releases) 下载地址
 - 支持参数:
 
 ```
-Usage of ./go-stress-testing-mac:
+Usage of ./go-stress-testing-pool-mac:
   -c uint
         并发数 (default 1)
   -d string
@@ -470,19 +470,19 @@ Usage of ./go-stress-testing-mac:
 
 ```
 # 查看用法
-./go-stress-testing-mac
+./go-stress-testing-pool-mac
 
 # 使用请求百度页面
-./go-stress-testing-mac -c 1 -n 100 -u https://www.baidu.com/
+./go-stress-testing-pool-mac -c 1 -n 100 -u https://www.baidu.com/
 
 # 使用debug模式请求百度页面
-./go-stress-testing-mac -c 1 -n 1 -d true -u https://www.baidu.com/
+./go-stress-testing-pool-mac -c 1 -n 1 -d true -u https://www.baidu.com/
 
 # 使用 curl文件(文件在curl目录下) 的方式请求
-./go-stress-testing-mac -c 1 -n 1 -p curl/baidu.curl.txt
+./go-stress-testing-pool-mac -c 1 -n 1 -p curl/baidu.curl.txt
 
 # 压测webSocket连接
-./go-stress-testing-mac -c 10 -n 10 -u ws://127.0.0.1:8089/acc
+./go-stress-testing-pool-mac -c 10 -n 10 -u ws://127.0.0.1:8089/acc
 ```
 
 - 完整压测命令示例
@@ -550,10 +550,10 @@ go run main.go -c 1 -n 1 -p curl/baidu.curl.txt
 ```
 
 
-### 4.4 go-stress-testing 对 Golang web 压测
+### 4.4 go-stress-testing-pool 对 Golang web 压测
 
 
-这里使用go-stress-testing对go server进行压测(部署在同一台机器上)，并统计压测结果
+这里使用go-stress-testing-pool对go server进行压测(部署在同一台机器上)，并统计压测结果
 
 - 申请的服务器配置
 
@@ -565,7 +565,7 @@ CPU: 4核 (Intel Xeon(Cascade Lake) Platinum 8269  2.5 GHz/3.2 GHz)
 
 go version: go1.12.9 linux/amd64
 
-![go-stress-testing01](https://img.mukewang.com/5d64a48e0001bb8421170573.png)
+![go-stress-testing-pool01](https://img.mukewang.com/5d64a48e0001bb8421170573.png)
 
 - go server
 
@@ -630,7 +630,7 @@ func main() {
 ## 5、压测工具的比较
 ### 5.1 比较
 
-| -         |  ab     | locust  | Jmeter  | go-stress-testing  | 云压测  |
+| -         |  ab     | locust  | Jmeter  | go-stress-testing-pool  | 云压测  |
 | :----     |  :----  |  :----  |  :----  |  :----             |  :---- |
 |   实现语言 |    C    |  Python |  Java   |      Golang        |  -     |
 |   UI界面  |    无   |   有     |    有   |        无          |    无   | 
@@ -895,6 +895,6 @@ TCP 握手：
 
 [基于websocket单台机器支持百万连接分布式聊天(IM)系统](https://github.com/link1st/gowebsocket)
 
-[https://github.com/link1st/go-stress-testing](https://github.com/link1st/go-stress-testing)
+[https://github.com/link1st/go-stress-testing-pool](https://github.com/link1st/go-stress-testing-pool)
 
-github 搜:link1st 查看项目 go-stress-testing
+github 搜:link1st 查看项目 go-stress-testing-pool

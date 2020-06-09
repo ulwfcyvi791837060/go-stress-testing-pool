@@ -8,25 +8,26 @@
 package golink
 
 import (
-	"go-stress-testing/heper"
-	"go-stress-testing/model"
-	"go-stress-testing/server/client"
+	"go-stress-testing-pool/heper"
+	"go-stress-testing-pool/model"
+	"go-stress-testing-pool/server/client"
 	"sync"
 	"time"
 )
 
 // http go link
-func Http(chanId uint64, requestResultCh chan<- *model.RequestResults, totalNumber uint64, wg *sync.WaitGroup, request *model.Request) {
+func Http(chanId uint64, requestResultCh chan<- *model.RequestResults, cycleNumber uint64, wg *sync.WaitGroup, request *model.Request) {
 
 	defer func() {
 		wg.Done()
 	}()
 
 	// fmt.Printf("启动协程 编号:%05d \n", chanId)
-	for i := uint64(0); i < totalNumber; i++ {
+	for i := uint64(0); i < cycleNumber; i++ {
 
 		var (
 			startTime = time.Now()
+			//成功数加1
 			isSucceed = false
 			errCode   = model.HttpOk
 		)
