@@ -16,6 +16,7 @@ import (
 	"go-stress-testing-pool/server/statistics"
 	"go-stress-testing-pool/server/verify"
 	"go-stress-testing-pool/worker"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -30,7 +31,7 @@ var poolOne worker.WorkPool
 func init() {
 
 	//worker.StartPool(3000)
-	poolOne.InitPool()
+	//poolOne.InitPool()
 
 	// http
 	model.RegisterVerifyHttp("statusCode", verify.HttpStatusCode)
@@ -43,6 +44,10 @@ func init() {
 
 func DisposePool(concurrency, cycleNumber uint64, request *model.Request) {
 
+	concurrencyStr := strconv.FormatUint(concurrency, 10)
+	concurrencyInt, _ := strconv.Atoi(concurrencyStr)
+	poolOne.InitPool(concurrencyInt)
+
 	// 设置接收数据缓存
 	requestResultCh := make(chan *model.RequestResults, 1000000)
 	var (
@@ -53,18 +58,16 @@ func DisposePool(concurrency, cycleNumber uint64, request *model.Request) {
 	wgReceiving.Add(1)
 	//接收结果
 	go statistics.ReceivingResults(concurrency, requestResultCh, &wgReceiving)
-
+	var paramMap = make(map[string]interface{})
+	paramMap["ch"] = requestResultCh
+	paramMap["cycleNumber"] = cycleNumber
+	paramMap["wg"] = &wg
+	paramMap["request"] = request
 	for i := uint64(0); i < concurrency; i++ {
 		wg.Add(1)
 		switch request.Form {
 		case model.FormTypeHttp:
-			var paramMap = make(map[string]interface{})
 			paramMap["chanId"] = i
-			paramMap["ch"] = requestResultCh
-			paramMap["cycleNumber"] = cycleNumber
-			paramMap["wg"] = &wg
-			paramMap["request"] = request
-
 			poolOne.Run(job.RunHttp, paramMap)
 		case model.FormTypeWebSocket:
 

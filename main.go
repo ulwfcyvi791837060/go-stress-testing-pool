@@ -112,13 +112,13 @@ func main() {
 	//go run main.go -c 3000 -n 1 -p curl/test.chrome.curl.txt -v json
 	//go run main.go -c 3000 -n 1 -p curl/aws.heartBeat.chrome.curl.txt -v json
 
-	concurrency = 1000
+	/*concurrency = 3000
 	cycleNumber = 1
 	//path =  "curl/local.heartBeat.chrome.curl.txt"
-	//path =  "curl/local.heartBeat.chrome.curl.txt"
-	path =  "curl/aws.heartBeat.chrome.curl.txt"
+	path =  "curl/local.heartBeat.chrome.curl.txt"
+	//path =  "curl/aws.heartBeat.chrome.curl.txt"
 	verify = "json"
-	//debugStr = "true"
+	//debugStr = "true"*/
 
 
 	if concurrency == 0 || cycleNumber == 0 || (requestUrl == "" && path == "") {

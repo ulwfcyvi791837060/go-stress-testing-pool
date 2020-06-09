@@ -7,7 +7,7 @@ import (
 
 const (
 	workerNumMax     = 10000
-	workerNumDefault = 1000
+	//workerNumDefault = 3000
 	//workerNumDefault = 20
 )
 
@@ -22,7 +22,7 @@ type WorkPool struct {
 }
 
 //得到一个线程池并返回 句柄
-func (p *WorkPool) InitPool() {
+func (p *WorkPool) InitPool(workerNumDefault int) {
 	*p = WorkPool{defaultNum: workerNumDefault,
 		maxNum: workerNumMax, stopTopic: false,
 		taskPool: make(chan taskWork, workerNumDefault*2), taskQue: nil}
